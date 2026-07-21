@@ -1,0 +1,15 @@
+USE pedidos_db;
+
+CREATE TABLE pedido (
+    id BIGINT NOT NULL,
+    cliente VARCHAR(150) NOT NULL,
+    produto VARCHAR(150) NOT NULL,
+    quantidade INT NOT NULL,
+    valor DECIMAL(10, 2) NOT NULL
+);
+
+ALTER TABLE pedido
+ADD CONSTRAINT pk_pedido PRIMARY KEY (id);
+
+ALTER TABLE pedido
+MODIFY COLUMN id BIGINT NOT NULL AUTO_INCREMENT;
