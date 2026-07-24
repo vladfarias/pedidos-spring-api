@@ -18,4 +18,16 @@ public class PedidoService {
     public List<PedidoEntity> listarTodos() {
         return pedidoRepository.findAll();
     }
+
+    public List<PedidoEntity> buscarPorCliente(String cliente) {
+        return pedidoRepository.findByClienteContainingIgnoreCase(cliente);
+    }
+
+    public List<PedidoEntity> buscarPorProduto(String produto) {
+        return pedidoRepository.findByProdutoContainingIgnoreCase(produto);
+    }
+
+    public List<PedidoEntity> buscarPorQuantidadeMaiorQue(Integer quantidade) {
+        return pedidoRepository.findByQuantidadeGreaterThan(quantidade);
+    }
 }
