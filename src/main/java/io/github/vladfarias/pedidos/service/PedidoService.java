@@ -3,11 +3,11 @@ package io.github.vladfarias.pedidos.service;
 import io.github.vladfarias.pedidos.dto.PedidoRequestDTO;
 import io.github.vladfarias.pedidos.dto.PedidoResponseDTO;
 import io.github.vladfarias.pedidos.entity.PedidoEntity;
+import io.github.vladfarias.pedidos.exception.PedidoNaoEncontradoException;
 import io.github.vladfarias.pedidos.repository.PedidoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PedidoService {
@@ -25,52 +25,62 @@ public class PedidoService {
                 .toList();
     }
 
-    public Optional<PedidoResponseDTO> buscarPorId(Long id) {
-        return pedidoRepository.findById(id)
-                .map(this::converterParaResponse);
+    public PedidoResponseDTO buscarPorId(Long id) {
+        PedidoEntity entity = buscarEntityPorId(id);
+
+        return converterParaResponse(entity);
     }
 
     public PedidoResponseDTO criar(PedidoRequestDTO request) {
         PedidoEntity entity = new PedidoEntity();
 
-        entity.setCliente(request.cliente());
-        entity.setProduto(request.produto());
-        entity.setQuantidade(request.quantidade());
-        entity.setValor(request.valor());
+        atualizarDados(entity, request);
 
         PedidoEntity pedidoSalvo = pedidoRepository.save(entity);
 
         return converterParaResponse(pedidoSalvo);
     }
 
-    public Optional<PedidoResponseDTO> atualizar(
+    public PedidoResponseDTO atualizar(
             Long id,
             PedidoRequestDTO request
     ) {
+        PedidoEntity entity = buscarEntityPorId(id);
+
+        atualizarDados(entity, request);
+
+        PedidoEntity pedidoAtualizado =
+                pedidoRepository.save(entity);
+
+        return converterParaResponse(pedidoAtualizado);
+    }
+
+    public void excluir(Long id) {
+        PedidoEntity entity = buscarEntityPorId(id);
+
+        pedidoRepository.delete(entity);
+    }
+
+    private PedidoEntity buscarEntityPorId(Long id) {
         return pedidoRepository.findById(id)
-                .map(entity -> {
-                    entity.setCliente(request.cliente());
-                    entity.setProduto(request.produto());
-                    entity.setQuantidade(request.quantidade());
-                    entity.setValor(request.valor());
-
-                    PedidoEntity pedidoAtualizado =
-                            pedidoRepository.save(entity);
-
-                    return converterParaResponse(pedidoAtualizado);
-                });
+                .orElseThrow(
+                        () -> new PedidoNaoEncontradoException(id)
+                );
     }
 
-    public boolean excluir(Long id) {
-        if (!pedidoRepository.existsById(id)) {
-            return false;
-        }
-
-        pedidoRepository.deleteById(id);
-        return true;
+    private void atualizarDados(
+            PedidoEntity entity,
+            PedidoRequestDTO request
+    ) {
+        entity.setCliente(request.cliente());
+        entity.setProduto(request.produto());
+        entity.setQuantidade(request.quantidade());
+        entity.setValor(request.valor());
     }
 
-    private PedidoResponseDTO converterParaResponse(PedidoEntity entity) {
+    private PedidoResponseDTO converterParaResponse(
+            PedidoEntity entity
+    ) {
         return new PedidoResponseDTO(
                 entity.getId(),
                 entity.getCliente(),
