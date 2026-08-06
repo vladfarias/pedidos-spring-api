@@ -1,68 +1,63 @@
 package io.github.vladfarias.pedidos.entity;
 
-
+import io.github.vladfarias.pedidos.enums.StatusPedido;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
+
 @Entity
-@Table(name= "pedido")
+@Table(name = "pedido")
+@Getter
+@Setter
+@NoArgsConstructor
 public class PedidoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "cliente", nullable = false, length = 150)
+    @Column(name = "cliente", nullable = false)
     private String cliente;
 
-    @Column(name = "produto", nullable = false, length = 150)
+    @Column(name = "sku", nullable = false)
+    private String sku;
+
+    @Column(name = "produto", nullable = false)
     private String produto;
 
     @Column(name = "quantidade", nullable = false)
     private Integer quantidade;
 
-    @Column(name = "valor", nullable = false, precision = 10, scale = 2)
+    @Column(name = "valor", nullable = false)
     private BigDecimal valor;
 
-    public Long getId() {
-        return id;
-    }
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private StatusPedido status;
 
-    public String getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(String cliente) {
+    public PedidoEntity(
+            String cliente,
+            String sku,
+            String produto,
+            Integer quantidade,
+            BigDecimal valor,
+            StatusPedido status
+    ) {
         this.cliente = cliente;
-    }
-
-    public String getProduto() {
-        return produto;
-    }
-
-    public void setProduto(String produto) {
+        this.sku = sku;
         this.produto = produto;
-    }
-
-    public Integer getQuantidade() {
-        return quantidade;
-    }
-
-    public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
-    }
-
-    public BigDecimal getValor() {
-        return valor;
-    }
-
-    public void setValor(BigDecimal valor) {
         this.valor = valor;
+        this.status = status;
     }
-
 }

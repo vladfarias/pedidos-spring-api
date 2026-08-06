@@ -12,6 +12,9 @@ public record PedidoRequestDTO(
         @NotBlank(message = "O cliente é obrigatório")
         String cliente,
 
+        @NotBlank(message = "O SKU é obrigatório")
+        String sku,
+
         @NotBlank(message = "O produto é obrigatório")
         String produto,
 
@@ -25,5 +28,6 @@ public record PedidoRequestDTO(
                 message = "O valor deve ser maior que zero"
         )
         BigDecimal valor
+
 ) {
 }

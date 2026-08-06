@@ -1,5 +1,7 @@
 package io.github.vladfarias.pedidos.dto;
 
+import io.github.vladfarias.pedidos.enums.StatusPedido;
+
 import java.math.BigDecimal;
 
 public record PedidoResponseDTO(
@@ -8,11 +10,15 @@ public record PedidoResponseDTO(
 
         String cliente,
 
+        String sku,
+
         String produto,
 
         Integer quantidade,
 
-        BigDecimal valor
+        BigDecimal valor,
+
+        StatusPedido status
 
 ) {
 }
