@@ -1,33 +1,90 @@
 USE pedidos_db;
 
-INSERT INTO pedido (cliente, produto, quantidade, valor) VALUES
-                                                             ('João Silva',        'Notebook Dell Inspiron',          1, 3899.90),
-                                                             ('Maria Souza',       'Monitor LG 27"',                  2, 1299.90),
-                                                             ('Carlos Oliveira',   'Mouse Logitech MX Master 3',      1, 499.90),
-                                                             ('Ana Pereira',       'Teclado Mecânico Keychron K2',    1, 689.90),
-                                                             ('Fernanda Lima',     'Headset HyperX Cloud II',         1, 399.90),
-                                                             ('Ricardo Santos',    'SSD Kingston 1TB NVMe',           2, 579.90),
-                                                             ('Juliana Costa',     'Notebook Lenovo ThinkPad',        1, 5899.00),
-                                                             ('Eduardo Martins',   'Webcam Logitech C920',            3, 449.90),
-                                                             ('Patrícia Almeida',  'Dock USB-C Dell',                 1, 899.00),
-                                                             ('Roberto Ferreira',  'Monitor Samsung 24"',             2, 999.90),
-                                                             ('Camila Rocha',      'Impressora HP LaserJet',          1, 1599.90),
-                                                             ('Lucas Gomes',       'Mouse Pad Gamer XL',              4, 129.90),
-                                                             ('Mariana Ribeiro',   'Notebook Acer Aspire 5',          1, 4199.00),
-                                                             ('Bruno Carvalho',    'HD Externo Seagate 2TB',          2, 469.90),
-                                                             ('Vanessa Cardoso',   'Caixa de Som JBL Flip 6',         1, 699.90),
-                                                             ('Felipe Barbosa',    'Monitor Dell UltraSharp',         2, 2499.90),
-                                                             ('Aline Moreira',     'Cadeira Ergonômica',              1, 2199.90),
-                                                             ('Gustavo Nunes',     'Mesa Digitalizadora Wacom',       1, 1199.90),
-                                                             ('Beatriz Fernandes', 'Apple Magic Keyboard',            1, 1099.90),
-                                                             ('Diego Rodrigues',   'MacBook Air M3',                  1, 9499.00),
-                                                             ('Renata Castro',     'iPad Air',                        2, 5299.00),
-                                                             ('Leonardo Alves',    'Samsung Galaxy S25',              1, 5999.00),
-                                                             ('Tatiane Mendes',    'iPhone 17',                       1, 8999.00),
-                                                             ('André Ribeiro',     'Monitor AOC 32"',                 2, 1699.90),
-                                                             ('Paulo Henrique',    'Roteador TP-Link AX3000',         1, 799.90),
-                                                             ('Sabrina Duarte',    'Switch Gigabit 16 Portas',        1, 649.90),
-                                                             ('Rafael Moraes',     'Servidor Dell PowerEdge',         1, 18500.00),
-                                                             ('Cristiane Lopes',   'Nobreak SMS 1500VA',              2, 1249.90),
-                                                             ('Vinicius Teixeira', 'Mini PC Intel NUC',               1, 3599.90),
-                                                             ('Gabriela Freitas',  'Notebook ASUS Zenbook',           1, 7299.90);
+INSERT INTO pedido (
+    cliente,
+    sku,
+    produto,
+    quantidade,
+    valor,
+    status
+) VALUES
+      (
+          'João Silva',
+          'NOTEBOOK-001',
+          'Notebook',
+          1,
+          3899.90,
+          'CRIADO'
+      ),
+      (
+          'Maria Souza',
+          'MONITOR-LG-27',
+          'Monitor LG 27"',
+          2,
+          1299.90,
+          'CRIADO'
+      ),
+      (
+          'Carlos Oliveira',
+          'MOUSE-LOGITECH-MX3',
+          'Mouse Logitech MX Master 3',
+          1,
+          499.90,
+          'CRIADO'
+      ),
+      (
+          'Ana Pereira',
+          'TECLADO-KEYCHRON-K2',
+          'Teclado Mecânico Keychron K2',
+          1,
+          689.90,
+          'CRIADO'
+      ),
+      (
+          'Fernanda Lima',
+          'HEADSET-HYPERX-CLOUD2',
+          'Headset HyperX Cloud II',
+          1,
+          399.90,
+          'CRIADO'
+      ),
+      (
+          'Ricardo Santos',
+          'SSD-KINGSTON-1TB',
+          'SSD Kingston 1TB NVMe',
+          2,
+          579.90,
+          'CRIADO'
+      ),
+      (
+          'Juliana Costa',
+          'NOTEBOOK-LENOVO-THINKPAD',
+          'Notebook Lenovo ThinkPad',
+          1,
+          5899.00,
+          'CRIADO'
+      ),
+      (
+          'Eduardo Martins',
+          'WEBCAM-LOGITECH-C920',
+          'Webcam Logitech C920',
+          3,
+          449.90,
+          'CRIADO'
+      ),
+      (
+          'Patrícia Almeida',
+          'DOCK-DELL-USBC',
+          'Dock USB-C Dell',
+          1,
+          899.00,
+          'CRIADO'
+      ),
+      (
+          'Roberto Ferreira',
+          'MOUSE-001',
+          'Mouse',
+          2,
+          120.00,
+          'CRIADO'
+      );
