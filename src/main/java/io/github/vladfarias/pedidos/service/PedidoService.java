@@ -3,9 +3,11 @@ package io.github.vladfarias.pedidos.service;
 import io.github.vladfarias.pedidos.dto.PedidoRequestDTO;
 import io.github.vladfarias.pedidos.dto.PedidoResponseDTO;
 import io.github.vladfarias.pedidos.entity.PedidoEntity;
+import io.github.vladfarias.pedidos.enums.StatusPedido;
 import io.github.vladfarias.pedidos.exception.PedidoNaoEncontradoException;
 import io.github.vladfarias.pedidos.repository.PedidoRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,26 +23,31 @@ public class PedidoService {
     public List<PedidoResponseDTO> listarTodos() {
         return pedidoRepository.findAll()
                 .stream()
-                .map(this::converterParaResponse)
+                .map(this::converterParaResponseDTO)
                 .toList();
     }
 
     public PedidoResponseDTO buscarPorId(Long id) {
         PedidoEntity entity = buscarEntityPorId(id);
 
-        return converterParaResponse(entity);
+        return converterParaResponseDTO(entity);
     }
 
+    @Transactional
     public PedidoResponseDTO criar(PedidoRequestDTO request) {
         PedidoEntity entity = new PedidoEntity();
 
         atualizarDados(entity, request);
 
-        PedidoEntity pedidoSalvo = pedidoRepository.save(entity);
+        entity.setStatus(StatusPedido.CRIADO);
 
-        return converterParaResponse(pedidoSalvo);
+        PedidoEntity pedidoSalvo =
+                pedidoRepository.save(entity);
+
+        return converterParaResponseDTO(pedidoSalvo);
     }
 
+    @Transactional
     public PedidoResponseDTO atualizar(
             Long id,
             PedidoRequestDTO request
@@ -52,9 +59,10 @@ public class PedidoService {
         PedidoEntity pedidoAtualizado =
                 pedidoRepository.save(entity);
 
-        return converterParaResponse(pedidoAtualizado);
+        return converterParaResponseDTO(pedidoAtualizado);
     }
 
+    @Transactional
     public void excluir(Long id) {
         PedidoEntity entity = buscarEntityPorId(id);
 
@@ -73,20 +81,23 @@ public class PedidoService {
             PedidoRequestDTO request
     ) {
         entity.setCliente(request.cliente());
+        entity.setSku(request.sku());
         entity.setProduto(request.produto());
         entity.setQuantidade(request.quantidade());
         entity.setValor(request.valor());
     }
 
-    private PedidoResponseDTO converterParaResponse(
+    private PedidoResponseDTO converterParaResponseDTO(
             PedidoEntity entity
     ) {
         return new PedidoResponseDTO(
                 entity.getId(),
                 entity.getCliente(),
+                entity.getSku(),
                 entity.getProduto(),
                 entity.getQuantidade(),
-                entity.getValor()
+                entity.getValor(),
+                entity.getStatus()
         );
     }
 }
